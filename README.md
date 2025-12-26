@@ -31,34 +31,59 @@ pip install openai python-dotenv tqdm matplotlib numpy
 
 ### Configure environment
 
-Set `OPENAI_API_KEY` (the runners use `python-dotenv`, so a local `.env` also works).
+Set `OPENAI_API_KEY` and `MAESTRO_NANO_ROOT` for your environment. The runners use `python-dotenv`, so a local `.env` file is the recommended approach.
 
-This repo also supports a dedicated Maestro path variable:
+This repo supports two key variables:
 
+- `OPENAI_API_KEY` — your OpenAI API key
 - `MAESTRO_NANO_ROOT` — absolute path to your `maestro-nano/` folder
 	- If set, scripts will use it to locate datasets and write results/logs.
 	- If not set, scripts fall back to auto-detecting paths relative to `maestro-nano/scripts/`.
 
-PowerShell:
+#### Recommended: Use `.env` file (persistent across sessions)
+
+Create a `.env` file at the repo root:
+
+```dotenv
+OPENAI_API_KEY=sk-...
+MAESTRO_NANO_ROOT=./maestro-nano
+```
+
+Or use an absolute path (more robust):
+
+```dotenv
+OPENAI_API_KEY=sk-...
+MAESTRO_NANO_ROOT=/absolute/path/to/maestro-nano
+```
+
+#### Temporary: Set via shell (current session only)
+
+**Note:** These commands set variables only for the current shell session. When you close the terminal, they are lost.
+
+PowerShell (session-only):
 ```powershell
-$env:OPENAI_API_KEY = "..."
+$env:OPENAI_API_KEY = "sk-..."
 $env:MAESTRO_NANO_ROOT = (Resolve-Path .\maestro-nano).Path
 ```
 
-bash:
+bash (session-only):
 ```bash
-export OPENAI_API_KEY="..."
+export OPENAI_API_KEY="sk-..."
 export MAESTRO_NANO_ROOT="$(pwd)/maestro-nano"
 ```
 
-Optional `.env` (create at the repo root *or* inside `maestro-nano/`):
+#### Permanent: System environment variables
 
-```dotenv
-OPENAI_API_KEY=...
-# Recommended: absolute path (example shown for Windows/macOS/Linux)
-# MAESTRO_NANO_ROOT=/absolute/path/to/maestro-nano
-# Also works if you run from the repo root:
-MAESTRO_NANO_ROOT=./maestro-nano
+**Windows** — use `setx` in PowerShell (Admin):
+```powershell
+setx OPENAI_API_KEY "sk-..."
+setx MAESTRO_NANO_ROOT "C:\path\to\maestro-nano"
+```
+
+**macOS/Linux** — add to your shell profile (`~/.bashrc`, `~/.zshrc`, etc.):
+```bash
+export OPENAI_API_KEY="sk-..."
+export MAESTRO_NANO_ROOT="/path/to/maestro-nano"
 ```
 
 ## Run Experiments

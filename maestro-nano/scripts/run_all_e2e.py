@@ -225,8 +225,8 @@ def main():
 
     # --- run analyze_results.py on the live CSV ---
     if not args.no_collect:
-        analyze_script = script_dir.parent / "scripts" / "analyze_results.py"
-        results_csv = maestro_nano_dir / "baseline" / "datasets" / "aoc" / "results_summary_live.csv"
+        analyze_script = script_dir / "analyze_results.py"
+        results_csv = maestro_nano_root / "baseline" / "datasets" / "aoc" / "results_summary_live.csv"
         
         if analyze_script.exists() and results_csv.exists():
             analyze_name = "analyze_results"
