@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../maestro-harvard-capstone"
+		}
+	],
+	"settings": {
+		"workbench.colorTheme": "Default Light Modern"
+	}
+}

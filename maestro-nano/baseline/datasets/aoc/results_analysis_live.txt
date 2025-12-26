@@ -1,0 +1,19 @@
+=== Overall Results Summary ===
+Rows processed: 25
+
+Single Agent: 25 / 25  => 100.00% (95% CI: 100.00% - 100.00%)
+Multi  Agent: 21 / 25  => 84.00% (95% CI: 69.63% - 98.37%)
+
+Single Agent outcome breakdown:
+  SUCCESS: 25 (100.0%)
+
+Multi Agent outcome breakdown:
+  SUCCESS: 21 (84.0%)
+  FAIL-MISSING: 3 (12.0%)
+  FAIL-INCORRECT: 1 (4.0%)
+
+One-tailed two-proportion z-test (H0: multi <= single, Ha: multi > single):
+  p1 (single) = 1.0000, p2 (multi) = 0.8400
+  diff (multi - single) = -0.1600
+  z = -2.085, p-value (one-tailed) = 0.9815
+  Conclusion: NOT statistically significant at alpha=0.05
