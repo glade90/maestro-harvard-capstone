@@ -1,23 +1,131 @@
+# Maestro: Harvard Capstone
 
-## Example Commands
+This repo contains the code and artifacts for the **Maestro** capstone project, including experiment runners for LLM-based solution generation and evaluation on **Advent of Code (AoC)** datasets.
 
-### Command to run a single year: 
-python %ROOT%\maestro-nano\scripts\run_all_e2e.py --years 2021 --models gpt-4.1-mini --clear-summary --stream-output
+Quick links:
+- Paper: [paper/MaestroAI-Capstone.pdf](paper/MaestroAI-Capstone.pdf)
+- Slides: [slides/annotated-Maestro.AI_CapstonePresentationSlides.pdf](slides/annotated-Maestro.AI_CapstonePresentationSlides.pdf)
 
-### Command example to run something 10 times 
-python %ROOT%\maestro-nano\scripts\run_all_repeats.py -n 10 --year 2021 --day 16 --models gpt-4.1-nano
+## Repo Layout
 
-### replay a test:
-python <ROOT>\maestro-nano\scripts\replay_cmds.py xx --package
+- `maestro-nano/`
+	- `baseline/datasets/aoc/` — AoC problems, inputs, and baseline answers (e.g., `result1.txt`, `result2.txt`)
+	- `scripts/` — experiment runners, collectors, analysis and plotting utilities
+- `paper/` — capstone paper (PDF)
+- `slides/` — presentation slides (PDF)
 
-### Prompt Line Test
-python <ROOT>/maestro-nano/scripts/analyze_prompt_lines.py --year 2021 --tag 2021_prompt-line_test --no-archive --temperature 0.1 --stream-output
+## Setup
 
-### plot by day 
-python.exe c:/Development/python-tdd-dataset/scripts/analyze_results.py %ROOT%\maestro-nano\baseline\datasets\aoc\results_summary_live.csv --by-day
+### Prerequisites
 
-### Results: 
-%ROOT%\maestro-nano\baseline\datasets\aoc\results_summary_live.csv
+- Python 3.10+ recommended
+- An OpenAI API key in your environment
 
-### Tail Logs
-tail -f maestro-nano/baseline/results/run_all_logs/
+### Install Python dependencies
+
+There is no pinned `requirements.txt` in this repo, so install the runtime dependencies used by the scripts:
+
+```bash
+pip install openai python-dotenv tqdm matplotlib numpy
+```
+
+### Configure environment
+
+Set `OPENAI_API_KEY` (the runners use `python-dotenv`, so a local `.env` also works).
+
+PowerShell:
+```powershell
+$env:OPENAI_API_KEY = "..."
+```
+
+bash:
+```bash
+export OPENAI_API_KEY="..."
+```
+
+## Run Experiments
+
+All commands below assume your working directory is the repo root.
+
+### Run end-to-end evaluation (single + multi)
+
+Runs the AoC suite for the selected years/days and saves logs. By default it also runs collection to regenerate the live CSV summary.
+
+```bash
+python maestro-nano/scripts/run_all_e2e.py --years 2021 --models gpt-4.1-mini --clear-summary --stream-output
+```
+
+Useful flags:
+- `--modes single multi` — select run modes
+- `--days 1 2 3` or `--days day01 day02` — limit to specific days
+- `--temperature 0.2` — sampling temperature
+- `--prompt-set DEFAULT` — prompt set selection
+- `--no-collect` — skip the collection step
+
+### Repeat runs (variance / stability)
+
+```bash
+python maestro-nano/scripts/run_all_repeats.py -n 10 --year 2021 --day 16 --models gpt-4.1-nano
+```
+
+### Replay a specific command (debugging)
+
+```bash
+python maestro-nano/scripts/replay_cmds.py <INDEX> --csv <PATH_TO_FILE> --package
+```
+
+### Prompt-line analysis
+
+```bash
+python maestro-nano/scripts/analyze_prompt_lines.py --year 2021 --tag 2021_prompt-line_test --no-archive --temperature 0.1 --stream-output
+```
+
+## Results & Analysis
+
+### Primary results CSV
+
+The canonical “live” summary is written here:
+
+- [maestro-nano/baseline/datasets/aoc/results_summary_live.csv](maestro-nano/baseline/datasets/aoc/results_summary_live.csv)
+
+It is produced by:
+
+```bash
+python maestro-nano/scripts/collect_aoc_results.py
+```
+
+### Statistical summary
+
+```bash
+python maestro-nano/scripts/analyze_results.py maestro-nano/baseline/datasets/aoc/results_summary_live.csv
+```
+
+### Plotting
+
+Year-by-year:
+```bash
+python maestro-nano/scripts/plot_results.py maestro-nano/baseline/datasets/aoc/results_summary_live.csv
+```
+
+Day-by-day:
+```bash
+python maestro-nano/scripts/plot_results.py maestro-nano/baseline/datasets/aoc/results_summary_live.csv --by-day
+```
+
+Agg-tag plots (see notes in [maestro-nano/scripts/PLOT_AGG_TAG_USAGE.md](maestro-nano/scripts/PLOT_AGG_TAG_USAGE.md)):
+```bash
+python maestro-nano/scripts/plot_results.py maestro-nano/baseline/datasets/aoc/results_summary_live.csv --by-agg-tag
+```
+
+## Logs
+
+Run logs are written under:
+
+- `maestro-nano/results/run_all_logs/`
+- `maestro-nano/baseline/results/run_all_logs/` (depending on the script)
+
+On macOS/Linux you can tail logs like:
+
+```bash
+tail -f maestro-nano/results/run_all_logs/*/*.log
+```
