@@ -31,7 +31,10 @@ def create_client() -> OpenAI:
     if not api_key:
         raise RuntimeError(
             "OPENAI_API_KEY is not set.\n"
-            "Set it in your terminal with `export OPENAI_API_KEY=\"your-api-key-here\"` "
+            "Set it in your environment, e.g.:\n"
+            "  - PowerShell: $env:OPENAI_API_KEY = 'your-api-key-here'\n"
+            "  - bash/zsh  : export OPENAI_API_KEY=\"your-api-key-here\"\n"
+            "Or create a .env file (repo root or maestro-nano/) with OPENAI_API_KEY=...\n"
         )
 
     return OpenAI(api_key=api_key)

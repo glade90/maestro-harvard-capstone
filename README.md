@@ -42,20 +42,23 @@ This repo also supports a dedicated Maestro path variable:
 PowerShell:
 ```powershell
 $env:OPENAI_API_KEY = "..."
-$env:MAESTRO_NANO_ROOT = "C:\\Development\\maestro-harvard-capstone\\maestro-nano"
+$env:MAESTRO_NANO_ROOT = (Resolve-Path .\maestro-nano).Path
 ```
 
 bash:
 ```bash
 export OPENAI_API_KEY="..."
-export MAESTRO_NANO_ROOT="/abs/path/to/maestro-harvard-capstone/maestro-nano"
+export MAESTRO_NANO_ROOT="$(pwd)/maestro-nano"
 ```
 
 Optional `.env` (create at the repo root *or* inside `maestro-nano/`):
 
 ```dotenv
 OPENAI_API_KEY=...
-MAESTRO_NANO_ROOT=C:\\Development\\maestro-harvard-capstone\\maestro-nano
+# Recommended: absolute path (example shown for Windows/macOS/Linux)
+# MAESTRO_NANO_ROOT=/absolute/path/to/maestro-nano
+# Also works if you run from the repo root:
+MAESTRO_NANO_ROOT=./maestro-nano
 ```
 
 ## Run Experiments
