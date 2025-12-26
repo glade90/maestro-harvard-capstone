@@ -33,19 +33,35 @@ pip install openai python-dotenv tqdm matplotlib numpy
 
 Set `OPENAI_API_KEY` (the runners use `python-dotenv`, so a local `.env` also works).
 
+This repo also supports a dedicated Maestro path variable:
+
+- `MAESTRO_NANO_ROOT` — absolute path to your `maestro-nano/` folder
+	- If set, scripts will use it to locate datasets and write results/logs.
+	- If not set, scripts fall back to auto-detecting paths relative to `maestro-nano/scripts/`.
+
 PowerShell:
 ```powershell
 $env:OPENAI_API_KEY = "..."
+$env:MAESTRO_NANO_ROOT = "C:\\Development\\maestro-harvard-capstone\\maestro-nano"
 ```
 
 bash:
 ```bash
 export OPENAI_API_KEY="..."
+export MAESTRO_NANO_ROOT="/abs/path/to/maestro-harvard-capstone/maestro-nano"
+```
+
+Optional `.env` (create at the repo root *or* inside `maestro-nano/`):
+
+```dotenv
+OPENAI_API_KEY=...
+MAESTRO_NANO_ROOT=C:\\Development\\maestro-harvard-capstone\\maestro-nano
 ```
 
 ## Run Experiments
 
 All commands below assume your working directory is the repo root.
+If you prefer, you can also `cd maestro-nano` and run the same scripts via `python scripts/...`.
 
 ### Run end-to-end evaluation (single + multi)
 

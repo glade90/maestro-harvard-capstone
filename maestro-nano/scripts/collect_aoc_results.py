@@ -23,6 +23,8 @@ import shutil
 from datetime import datetime
 import zipfile
 
+from paths import get_maestro_nano_root
+
 try:
     from tqdm import tqdm
     _have_tqdm = True
@@ -50,7 +52,7 @@ except Exception:
 # Configuration
 # This script lives at <repo>/maestro-nano/scripts/collect_aoc_results.py.
 # Use that to robustly locate the maestro-nano root and its results folder.
-MAESTRO_NANO_ROOT = Path(__file__).resolve().parent.parent
+MAESTRO_NANO_ROOT = get_maestro_nano_root()
 REPO_ROOT = MAESTRO_NANO_ROOT.parent
 DATASETS_ROOT = MAESTRO_NANO_ROOT / "baseline" / "datasets" / "aoc"
 RESULTS_ROOT = MAESTRO_NANO_ROOT  / "baseline" /  "results"

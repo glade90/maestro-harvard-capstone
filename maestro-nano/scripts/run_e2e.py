@@ -12,6 +12,8 @@ from typing import Union
 
 from prompt_sets import get_prompt_set
 
+from paths import get_maestro_nano_root
+
 try:
     from tqdm import tqdm
     _have_tqdm = True
@@ -310,11 +312,12 @@ def main() -> None:
     )
     args = p.parse_args()
     
-    maestro_nano_dir = Path(__file__).resolve().parents[1] / "baseline"
+    maestro_nano_root = get_maestro_nano_root()
+    baseline_dir = maestro_nano_root / "baseline"
 
-    datasets_dir = maestro_nano_dir / "datasets"
+    datasets_dir = baseline_dir / "datasets"
     #print(f"[info] datasets directory in E2E script: {datasets_dir}")
-    results_dir = maestro_nano_dir / "results"
+    results_dir = baseline_dir / "results"
     aoc_dir = datasets_dir / "aoc"
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     current_results_dir = results_dir / args.mode / f"{timestamp}_{args.model}"

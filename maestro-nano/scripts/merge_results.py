@@ -15,12 +15,14 @@ from pathlib import Path
 from collections import OrderedDict
 from datetime import datetime
 
+from paths import get_maestro_nano_root, get_repo_root
+
 # default: use the directory containing the referenced collect_aoc_results.py if it exists,
 # otherwise fall back to the script's parent directory.
-REPO_ROOT = Path(__file__).resolve().parent.parent
-MAESTRO_NANO_ROOT = REPO_ROOT / "maestro-nano"
+MAESTRO_NANO_ROOT = get_maestro_nano_root()
+REPO_ROOT = get_repo_root()
 
-_DEFAULT_COLLECT_FILE = REPO_ROOT / "scripts" / "collect_aoc_results.py"
+_DEFAULT_COLLECT_FILE = MAESTRO_NANO_ROOT / "scripts" / "collect_aoc_results.py"
 DEFAULT_DIR = _DEFAULT_COLLECT_FILE.parent if _DEFAULT_COLLECT_FILE.exists() else Path(__file__).resolve().parent
 
 def _default_outpath():

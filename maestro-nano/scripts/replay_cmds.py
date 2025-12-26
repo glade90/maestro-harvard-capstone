@@ -18,8 +18,10 @@ import zipfile
 from datetime import datetime
 import re
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-MAESTRO_NANO_ROOT = REPO_ROOT / "maestro-nano"
+from paths import get_maestro_nano_root, get_repo_root
+
+MAESTRO_NANO_ROOT = get_maestro_nano_root()
+REPO_ROOT = get_repo_root()
 DEFAULT_CSV_PATH = MAESTRO_NANO_ROOT / "baseline" / "datasets" / "aoc" / "results_summary_live.csv"
 
 def load_row_by_index(idx: int, csv_path: Path):

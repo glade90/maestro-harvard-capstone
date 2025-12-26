@@ -17,6 +17,8 @@ from datetime import datetime
 import traceback
 from subprocess import PIPE, STDOUT, Popen
 
+from paths import get_maestro_nano_root
+
 #DEFAULT_MODELS = ["gpt-3.5-turbo", "gpt-4o-mini"], "gpt-5-nano"]
 DEFAULT_MODELS = [ "gpt-4.1-mini"]
 
@@ -52,9 +54,9 @@ def main():
 
     script_dir = Path(__file__).resolve().parents[0]
     print(f"[info] script directory: {script_dir}")
-    maestro_nano_dir = script_dir.parent 
-    print(f"[info] maestro-nano directory: {maestro_nano_dir}")
-    results_dir = maestro_nano_dir / "results"
+    maestro_nano_root = get_maestro_nano_root()
+    print(f"[info] maestro-nano directory: {maestro_nano_root}")
+    results_dir = maestro_nano_root / "baseline" / "results"
     print(f"[info] results directory: {results_dir}")
     run_e2e = script_dir / "run_e2e.py"
     if not run_e2e.exists():

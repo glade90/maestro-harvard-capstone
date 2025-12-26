@@ -13,6 +13,8 @@ import csv
 import re
 from collections import defaultdict
 
+from paths import get_maestro_nano_root
+
 try:
     import matplotlib.pyplot as plt
     import numpy as np
@@ -346,8 +348,8 @@ def plot_from_csv(csv_path: Path, out_path: Path, by_day: bool = False, by_agg_t
 def main(argv):
     import argparse
     ap = argparse.ArgumentParser(description="Plot results summary chart from CSV")
-    repo_root = Path(__file__).resolve().parent.parent
-    default_csv = repo_root  / "maestro-nano" / "baseline" / "datasets" / "aoc" / "results_summary_live.csv"
+    maestro_nano_root = get_maestro_nano_root()
+    default_csv = maestro_nano_root / "baseline" / "datasets" / "aoc" / "results_summary_live.csv"
     ap.add_argument("csv", nargs="?", default=str(default_csv), help="Path to results CSV")
     ap.add_argument("-o", "--out", help="Output PNG path (optional)")
     ap.add_argument("--by-day", action="store_true", help="Plot with x-axis = Day number instead of Year")

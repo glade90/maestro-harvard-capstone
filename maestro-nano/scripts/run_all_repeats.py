@@ -14,6 +14,8 @@ import argparse
 from datetime import datetime
 from tqdm import tqdm
 
+from paths import get_maestro_nano_root
+
 def _normalize_day_token(tok: str) -> str:
     t = str(tok).strip()
     if t.isdigit():
@@ -42,7 +44,8 @@ def main():
         print(f"run_all_e2e.py not found at {runner}", file=sys.stderr)
         sys.exit(2)
 
-    out_root = script_dir.parent / "results" / "run_all_repeats" / datetime.now().strftime("%Y%m%d_%H%M%S")
+    maestro_nano_root = get_maestro_nano_root()
+    out_root = maestro_nano_root / "baseline" / "results" / "run_all_repeats" / datetime.now().strftime("%Y%m%d_%H%M%S")
     out_root.mkdir(parents=True, exist_ok=True)
 
     runs = args.count
@@ -163,7 +166,7 @@ def main():
     print(f"\nCompleted {runs} runs. Failures: {failures}. Logs: {out_root}")
 
     # results run directories root (single/multi)
-    results_root = script_dir.parent / "baseline" / "results"
+    results_root = maestro_nano_root / "baseline" / "results"
     single_root = results_root / "single"
     multi_root = results_root / "multi"
 
